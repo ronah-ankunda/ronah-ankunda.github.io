@@ -1,1867 +1,614 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ronah Ankunda | Cybersecurity Analyst</title>
-<meta name="description" content="Ronah Ankunda — MSc Cybersecurity graduate, SIEM analyst, and AI-threat researcher specializing in spear phishing detection, incident response, and digital forensics.">
-<meta name="keywords" content="SOC Analyst, Cybersecurity Analyst, SIEM, Splunk, QRadar, Threat Detection, Digital Forensics, Incident Response, LLM Security, Spear Phishing">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #080c10;
-    --surface: #0d1117;
-    --surface2: #111822;
-    --border: #1e2d3d;
-    --accent: #00d4ff;
-    --accent2: #7c3aed;
-    --accent3: #10b981;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --mono: 'Space Mono', monospace;
-    --sans: 'DM Sans', sans-serif;
-    --display: 'Syne', sans-serif;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  /* NOISE OVERLAY */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.4;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 100;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(8,12,16,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0,212,255,0.08);
-  }
-
-  .nav-logo {
-    font-family: var(--mono);
-    font-size: 1.1rem;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-  }
-
-  .nav-logo span { color: var(--text); }
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--accent); }
-
-  /* HERO */
-  #hero {
-    min-height: 100vh;
-    display: grid;
-    place-items: center;
-    padding: 8rem 2rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
-  }
-
-  .hero-glow {
-    position: absolute;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
-
-  .hero-glow2 {
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(124,58,237,0.05) 0%, transparent 70%);
-    top: 30%;
-    right: 15%;
-    pointer-events: none;
-  }
-
-  .hero-content {
-    position: relative;
-    max-width: 900px;
-    width: 100%;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    border: 1px solid rgba(0,212,255,0.3);
-    padding: 0.4rem 0.8rem;
-    border-radius: 2px;
-    margin-bottom: 1.5rem;
-    background: rgba(0,212,255,0.04);
-    animation: fadeInUp 0.6s ease both;
-  }
-
-  .badge-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent3);
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  h1.hero-name {
-    font-family: var(--display);
-    font-size: clamp(3rem, 8vw, 6.5rem);
-    font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.3em;
-    animation: fadeInUp 0.6s 0.1s ease both;
-  }
-
-  h1.hero-name .accent { color: var(--accent); }
-
-  .hero-title {
-    font-family: var(--mono);
-    font-size: clamp(0.8rem, 1.5vw, 1rem);
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    animation: fadeInUp 0.6s 0.2s ease both;
-  }
-
-  .hero-desc {
-    font-size: 1.1rem;
-    color: #94a3b8;
-    max-width: 600px;
-    margin-bottom: 2.5rem;
-    font-weight: 300;
-    animation: fadeInUp 0.6s 0.3s ease both;
-  }
-
-  .hero-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    animation: fadeInUp 0.6s 0.4s ease both;
-  }
-
-  .btn {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 0.75rem 1.5rem;
-    border: 1px solid;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #000;
-    border-color: var(--accent);
-    font-weight: 700;
-  }
-
-  .btn-primary:hover {
-    background: transparent;
-    color: var(--accent);
-  }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--text);
-    border-color: var(--border);
-  }
-
-  .btn-outline:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--muted);
-    border-color: transparent;
-  }
-
-  .btn-ghost:hover { color: var(--accent); }
-
-  /* SECTIONS */
-  section {
-    padding: 6rem 2rem;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  h2.section-title {
-    font-family: var(--display);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: 3rem;
-  }
-
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, var(--border) 0%, transparent 100%);
-    margin: 0 auto;
-  }
-
-  /* ABOUT */
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-
-  .about-text p {
-    color: #94a3b8;
-    font-size: 1rem;
-    margin-bottom: 1.2rem;
-    font-weight: 300;
-  }
-
-  .about-text p strong { color: var(--text); font-weight: 500; }
-
-  .about-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s;
-  }
-
-  .stat-card:hover::before { transform: scaleX(1); }
-
-  .stat-num {
-    font-family: var(--display);
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 0.3rem;
-  }
-
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  /* SKILLS */
-  #skills { background: none; }
-
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .skill-category {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-    transition: border-color 0.2s;
-  }
-
-  .skill-category:hover { border-color: rgba(0,212,255,0.3); }
-
-  .skill-cat-title {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .skill-tag {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    padding: 0.25rem 0.6rem;
-    background: rgba(0,212,255,0.05);
-    border: 1px solid rgba(0,212,255,0.15);
-    color: #94a3b8;
-    letter-spacing: 0.05em;
-  }
-
-  /* EXPERIENCE */
-  .timeline {
-    position: relative;
-    padding-left: 2rem;
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.5rem;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(180deg, var(--accent) 0%, var(--border) 100%);
-  }
-
-  .timeline-item {
-    position: relative;
-    margin-bottom: 3rem;
-    padding-bottom: 3rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .timeline-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
-  .timeline-dot {
-    position: absolute;
-    left: -2.35rem;
-    top: 0.35rem;
-    width: 12px;
-    height: 12px;
-    background: var(--accent);
-    border: 2px solid var(--bg);
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-  }
-
-  .timeline-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 0.5rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .timeline-role {
-    font-family: var(--display);
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .timeline-date {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    white-space: nowrap;
-  }
-
-  .timeline-org {
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    color: var(--muted);
-    margin-bottom: 1rem;
-    letter-spacing: 0.05em;
-  }
-
-  .timeline-bullets {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .timeline-bullets li {
-    font-size: 0.9rem;
-    color: #94a3b8;
-    padding-left: 1.2rem;
-    position: relative;
-    font-weight: 300;
-  }
-
-  .timeline-bullets li::before {
-    content: '▸';
-    position: absolute;
-    left: 0;
-    color: var(--accent3);
-    font-size: 0.7rem;
-    top: 0.15rem;
-  }
-
-  /* RESEARCH */
-  #research {
-    background: var(--surface);
-    max-width: none;
-    padding: 6rem 2rem;
-  }
-
-  .research-inner { max-width: 1100px; margin: 0 auto; }
-
-  .research-hero {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    margin-bottom: 4rem;
-    align-items: start;
-  }
-
-  .research-title-block h2 {
-    font-family: var(--display);
-    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
-  }
-
-  .research-title-block h2 em {
-    color: var(--accent);
-    font-style: normal;
-  }
-
-  .research-abstract {
-    color: #94a3b8;
-    font-size: 0.95rem;
-    font-weight: 300;
-    line-height: 1.8;
-  }
-
-  .research-abstract strong { color: var(--text); font-weight: 500; }
-
-  /* METRICS */
-  .metrics-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-bottom: 3rem;
-  }
-
-  .metric-cell {
-    background: var(--surface2);
-    padding: 1.5rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .metric-cell::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .metric-cell:hover::after { opacity: 1; }
-
-  .metric-value {
-    font-family: var(--display);
-    font-size: 2.4rem;
-    font-weight: 800;
-    margin-bottom: 0.2rem;
-  }
-
-  .metric-value.green { color: var(--accent3); }
-  .metric-value.red { color: #f43f5e; }
-  .metric-value.blue { color: var(--accent); }
-  .metric-value.purple { color: #a78bfa; }
-
-  .metric-label {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 0.2rem;
-  }
-
-  .metric-model {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    color: rgba(100,116,139,0.6);
-  }
-
-  /* CHART BARS */
-  .chart-section {
-    margin-bottom: 3rem;
-  }
-
-  .chart-label {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-  }
-
-  .bar-chart {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .bar-row {
-    display: grid;
-    grid-template-columns: 140px 1fr 60px;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .bar-model {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--text);
-    text-align: right;
-  }
-
-  .bar-track {
-    background: rgba(255,255,255,0.04);
-    height: 28px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .bar-fill {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding-left: 0.5rem;
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: rgba(0,0,0,0.7);
-    font-weight: 700;
-    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-    width: 0;
-  }
-
-  .bar-fill.accent { background: var(--accent); }
-  .bar-fill.green { background: var(--accent3); }
-  .bar-fill.red { background: #f43f5e; }
-  .bar-fill.purple { background: #a78bfa; }
-
-  .bar-pct {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-
-  /* CONFUSION MATRIX */
-  .matrix-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-  }
-
-  .matrix-card {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-  }
-
-  .matrix-card-title {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .matrix-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: var(--mono);
-    font-size: 0.75rem;
-  }
-
-  .matrix-table th {
-    color: var(--muted);
-    font-weight: 400;
-    padding: 0.4rem;
-    text-align: center;
-    font-size: 0.65rem;
-  }
-
-  .matrix-table td {
-    padding: 0.6rem;
-    text-align: center;
-    border: 1px solid var(--border);
-  }
-
-  .cell-tp { background: rgba(16,185,129,0.15); color: var(--accent3); font-weight: 700; }
-  .cell-tn { background: rgba(0,212,255,0.08); color: var(--accent); font-weight: 700; }
-  .cell-fp { background: rgba(244,63,94,0.15); color: #f43f5e; font-weight: 700; }
-  .cell-fn { background: rgba(251,191,36,0.1); color: #fbbf24; }
-  .cell-label { color: var(--muted); font-size: 0.65rem; }
-
-  /* RESEARCH FINDINGS */
-  .findings-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 3rem;
-  }
-
-  .finding-card {
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-    background: var(--surface2);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .finding-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 3px;
-  }
-
-  .finding-card.positive::before { background: var(--accent3); }
-  .finding-card.negative::before { background: #f43f5e; }
-  .finding-card.neutral::before { background: var(--accent); }
-
-  .finding-icon {
-    font-size: 1.2rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .finding-title {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--text);
-    letter-spacing: 0.05em;
-    margin-bottom: 0.5rem;
-    font-weight: 700;
-  }
-
-  .finding-desc {
-    font-size: 0.85rem;
-    color: var(--muted);
-    font-weight: 300;
-    line-height: 1.6;
-  }
-
-  /* TECH USED */
-  .tech-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
-
-  .tech-pill {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    padding: 0.3rem 0.7rem;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    background: var(--surface);
-    text-transform: uppercase;
-  }
-
-  /* PROJECTS */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-
-  .project-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .project-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(0,212,255,0.03), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .project-card:hover {
-    border-color: rgba(0,212,255,0.3);
-    transform: translateY(-2px);
-  }
-
-  .project-card:hover::after { opacity: 1; }
-
-  .project-icon {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .project-name {
-    font-family: var(--display);
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 0.4rem;
-  }
-
-  .project-desc {
-    font-size: 0.85rem;
-    color: var(--muted);
-    font-weight: 300;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-  }
-
-  .project-tag {
-    font-family: var(--mono);
-    font-size: 0.6rem;
-    padding: 0.2rem 0.5rem;
-    border: 1px solid rgba(124,58,237,0.3);
-    color: #a78bfa;
-    background: rgba(124,58,237,0.05);
-    letter-spacing: 0.05em;
-  }
-
-  /* CERTS */
-  .certs-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-
-  .cert-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 1.5rem;
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    transition: border-color 0.2s;
-  }
-
-  .cert-card:hover { border-color: rgba(0,212,255,0.3); }
-
-  .cert-icon {
-    width: 40px;
-    height: 40px;
-    background: rgba(0,212,255,0.08);
-    border: 1px solid rgba(0,212,255,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-  }
-
-  .cert-name {
-    font-family: var(--sans);
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 0.2rem;
-  }
-
-  .cert-org {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .cert-status {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    margin-top: 0.4rem;
-    letter-spacing: 0.06em;
-  }
-
-  .cert-status.active { color: var(--accent3); }
-  .cert-status.pending { color: #fbbf24; }
-
-  /* RESUME */
-  #resume {
-    background: var(--surface);
-    max-width: none;
-    padding: 6rem 2rem;
-  }
-
-  .resume-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-
-  .resume-highlights {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .resume-highlights li {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.9rem;
-    color: #94a3b8;
-  }
-
-  .resume-highlights li::before {
-    content: '';
-    width: 20px;
-    height: 1px;
-    background: var(--accent);
-    flex-shrink: 0;
-  }
-
-  /* CONTACT */
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-
-  .contact-blurb {
-    font-size: 1rem;
-    color: #94a3b8;
-    font-weight: 300;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-  }
-
-  .contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    text-decoration: none;
-    color: var(--text);
-    font-size: 0.9rem;
-    padding: 1rem 1.25rem;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    transition: all 0.2s;
-  }
-
-  .contact-link:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .contact-icon {
-    width: 36px;
-    height: 36px;
-    background: rgba(0,212,255,0.08);
-    border: 1px solid rgba(0,212,255,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    flex-shrink: 0;
-  }
-
-  .contact-link-label {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 0.1rem;
-  }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: gap;
-    gap: 1rem;
-  }
-
-  .footer-left {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-  }
-
-  .footer-left span { color: var(--accent); }
-
-  .footer-right {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: rgba(100,116,139,0.5);
-  }
-
-  /* SCROLL ANIMATIONS */
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* MOBILE */
-  @media (max-width: 768px) {
-    nav { padding: 1rem; }
-    .nav-links { display: none; }
-    .about-grid,
-    .research-hero,
-    .contact-grid,
-    .resume-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .skills-grid,
-    .projects-grid,
-    .certs-grid,
-    .findings-grid { grid-template-columns: 1fr; }
-    .matrix-grid { grid-template-columns: 1fr; }
-    .metrics-row { grid-template-columns: 1fr 1fr; }
-    .bar-row { grid-template-columns: 100px 1fr 50px; }
-    section { padding: 4rem 1rem; }
-    #research, #resume { padding: 4rem 1rem; }
-    .about-stats { grid-template-columns: 1fr 1fr; }
-  }
-
-  @media (max-width: 480px) {
-    .metrics-row { grid-template-columns: 1fr; }
-    .hero-buttons { flex-direction: column; }
-    .btn { justify-content: center; }
-  }
-
-  /* UTILITY */
-  .mt-2 { margin-top: 2rem; }
-  .mb-1 { margin-bottom: 1rem; }
-  .text-accent { color: var(--accent); }
-  .text-muted { color: var(--muted); font-size: 0.85rem; }
-  .mono { font-family: var(--mono); }
-
-  /* TABLE */
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    margin-bottom: 2rem;
-  }
-
-  .data-table thead tr {
-    background: rgba(0,212,255,0.05);
-    border-bottom: 1px solid rgba(0,212,255,0.2);
-  }
-
-  .data-table th {
-    padding: 0.75rem 1rem;
-    text-align: left;
-    color: var(--accent);
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-  }
-
-  .data-table td {
-    padding: 0.75rem 1rem;
-    color: #94a3b8;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
-
-  .badge-green { color: var(--accent3); font-weight: 700; }
-  .badge-red { color: #f43f5e; font-weight: 700; }
-  .badge-blue { color: var(--accent); font-weight: 700; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ronah Ankunda | Cybersecurity Analyst</title>
+  <meta name="description" content="Ronah Ankunda is a cybersecurity analyst focused on SOC operations, threat detection, digital forensics, and AI security research." />
+  <meta name="keywords" content="Ronah Ankunda, Cybersecurity Analyst, SOC Analyst, Threat Detection, Digital Forensics, SIEM, Splunk, QRadar, AI Security, Phishing Detection" />
+  <meta name="author" content="Ronah Ankunda" />
+  <meta property="og:title" content="Ronah Ankunda | Cybersecurity Analyst" />
+  <meta property="og:description" content="SOC, threat detection, digital forensics, and AI security research portfolio." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ronah-ankunda.github.io/" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:           #0b1118;
+      --surface:      #101923;
+      --border:       rgba(255,255,255,0.07);
+      --border-mid:   rgba(255,255,255,0.11);
+      --text:         #e6edf5;
+      --muted:        #aab8c7;
+      --faint:        #6f8194;
+      --accent:       #73a7ff;
+      --accent-soft:  rgba(115,167,255,0.10);
+      --green:        #60d394;
+      --amber:        #f4c95d;
+      --red:          #ff8080;
+      --max:          1040px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 2rem; }
+    section { padding: 7rem 0; }
+
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(11,17,24,0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: var(--max); margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .brand { font-size: 0.9rem; font-weight: 500; text-decoration: none; color: var(--text); }
+
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a { color: var(--faint); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.6rem; }
+    h3 { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+    p { color: var(--muted); font-weight: 300; }
+
+    .section-label { font-size: 0.7rem; font-weight: 500; color: var(--accent); letter-spacing: 0.09em; text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+    .section-intro { font-size: 0.95rem; color: var(--muted); font-weight: 300; max-width: 580px; line-height: 1.85; margin-bottom: 3rem; }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 40px; padding: 0.55rem 1.1rem; border-radius: 8px; text-decoration: none; font-size: 0.83rem; font-weight: 500; border: 1px solid; transition: all 0.18s ease; }
+    .btn-primary { background: var(--accent); color: #07101a; border-color: var(--accent); font-weight: 600; }
+    .btn-primary:hover { background: #8fbdff; border-color: #8fbdff; }
+    .btn-ghost { color: var(--muted); background: transparent; border-color: var(--border-mid); }
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.22); }
+
+    /* HERO */
+    .hero { min-height: 90vh; display: flex; align-items: center; padding: 7rem 0 5rem; }
+    .hero-status { font-size: 0.78rem; color: var(--faint); font-weight: 400; margin-bottom: 1.75rem; display: flex; align-items: center; gap: 0.55rem; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: inline-block; flex-shrink: 0; }
+    h1 { font-size: clamp(2.6rem, 6vw, 4.5rem); font-weight: 600; letter-spacing: -0.04em; line-height: 1.06; margin-bottom: 1.25rem; }
+    .hero-lead { font-size: clamp(1rem, 1.8vw, 1.15rem); color: var(--muted); font-weight: 300; max-width: 580px; line-height: 1.8; margin-bottom: 2.5rem; }
+
+    /* ABOUT */
+    .about-body { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: start; }
+    .about-body p { margin-bottom: 1rem; font-size: 0.93rem; }
+    .about-body p:last-child { margin-bottom: 0; }
+    .about-details { display: flex; flex-direction: column; gap: 1.5rem; }
+    .detail-row { border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+    .detail-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .detail-label { font-size: 0.67rem; font-weight: 500; color: var(--faint); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.2rem; }
+    .detail-value { font-size: 0.88rem; color: var(--text); font-weight: 400; }
+
+    /* SKILLS */
+    .skills-table { display: flex; flex-direction: column; }
+    .skill-row { display: grid; grid-template-columns: 180px 1fr; gap: 1.5rem; align-items: baseline; padding: 0.95rem 0; border-bottom: 1px solid var(--border); }
+    .skill-row:last-child { border-bottom: none; }
+    .skill-cat { font-size: 0.8rem; color: var(--faint); font-weight: 400; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .tag { font-size: 0.78rem; color: var(--muted); font-weight: 400; padding: 0.18rem 0.55rem; border-radius: 5px; background: rgba(255,255,255,0.045); }
+
+    /* EXPERIENCE */
+    .exp-list { display: flex; flex-direction: column; }
+    .exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; padding: 2.25rem 0; border-bottom: 1px solid var(--border); }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-date { font-size: 0.78rem; color: var(--faint); font-weight: 400; line-height: 1.6; }
+    .exp-org  { font-size: 0.8rem; color: var(--faint); margin-top: 0.15rem; }
+    .exp-role { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.8rem; letter-spacing: -0.01em; }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+    .exp-bullets li { font-size: 0.87rem; color: var(--muted); font-weight: 300; padding-left: 1rem; position: relative; line-height: 1.7; }
+    .exp-bullets li::before { content: '–'; position: absolute; left: 0; color: var(--faint); }
+
+    /* RESEARCH */
+    #research { background: var(--surface); }
+    .research-cols { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: start; }
+    .finding { border-left: 2px solid var(--accent); padding: 1.1rem 1.35rem; background: var(--accent-soft); border-radius: 0 8px 8px 0; margin: 1.5rem 0 2rem; }
+    .finding p { color: #d7e2ef; font-size: 0.92rem; font-weight: 400; line-height: 1.75; }
+    .finding strong { color: var(--text); font-weight: 500; }
+    .metrics { display: flex; gap: 3rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .metric-num { font-size: 2.2rem; font-weight: 600; line-height: 1; letter-spacing: -0.04em; margin-bottom: 0.2rem; }
+    .metric-desc { font-size: 0.75rem; color: var(--faint); line-height: 1.5; }
+
+    .model-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+    .model-card-title { font-size: 0.8rem; font-weight: 500; color: var(--text); margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+    .model-row { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid var(--border); gap: 1rem; }
+    .model-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .model-name { font-size: 0.88rem; font-weight: 500; color: var(--text); }
+    .model-note { font-size: 0.75rem; color: var(--faint); margin-top: 0.1rem; }
+    .model-scores { display: flex; flex-direction: column; align-items: flex-end; gap: 0.15rem; }
+    .score-main { font-size: 0.88rem; font-weight: 600; color: var(--accent); }
+    .score-fpr  { font-size: 0.72rem; color: var(--faint); }
+    .score-fpr.warn { color: var(--amber); }
+
+    .data-details { margin-top: 1.75rem; display: flex; flex-direction: column; }
+    details { border-bottom: 1px solid var(--border); }
+    details:first-child { border-top: 1px solid var(--border); }
+    summary { padding: 0.8rem 0; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; color: var(--faint); font-weight: 400; transition: color 0.2s; user-select: none; }
+    summary:hover { color: var(--muted); }
+    summary::after { content: '+'; font-size: 0.8rem; color: var(--faint); }
+    details[open] summary::after { content: '–'; }
+    details[open] summary { color: var(--muted); }
+    .details-body { padding: 0 0 1.25rem; overflow-x: auto; }
+
+    table.dt { width: 100%; border-collapse: collapse; font-size: 0.77rem; color: var(--muted); }
+    table.dt th { text-align: left; padding: 0.5rem 0.75rem; font-size: 0.65rem; font-weight: 500; color: var(--faint); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); }
+    table.dt td { padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); font-weight: 300; }
+    table.dt tr:last-child td { border-bottom: none; }
+    .tg { color: var(--green); font-weight: 500; }
+    .tr { color: var(--red);   font-weight: 500; }
+    .tb { color: var(--accent); font-weight: 500; }
+
+    /* PROJECTS */
+    .project-group { margin-bottom: 4rem; }
+    .project-group:last-child { margin-bottom: 0; }
+    .group-header { margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+    .group-header h3 { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+    .group-header p { font-size: 0.82rem; color: var(--faint); font-weight: 300; margin-top: 0.15rem; }
+
+    .projects-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .project { padding: 1.25rem 1.35rem; background: var(--bg); transition: background 0.18s; }
+    .project:hover { background: rgba(255,255,255,0.025); }
+    .project h3 { font-size: 0.9rem; margin-bottom: 0.4rem; }
+    .project p { font-size: 0.82rem; font-weight: 300; line-height: 1.7; }
+    .project .tags { margin-top: 0.9rem; }
+    .project-link { display: inline-block; margin-top: 0.75rem; font-size: 0.75rem; color: var(--accent); text-decoration: none; }
+    .project-link:hover { color: #8fbdff; }
+
+    /* CERTS */
+    .certs-list { display: flex; flex-direction: column; }
+    .cert-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1rem; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+    .cert-row:last-child { border-bottom: none; }
+    .cert-name   { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+    .cert-issuer { font-size: 0.78rem; color: var(--faint); font-weight: 300; margin-top: 0.1rem; }
+    .badge { font-size: 0.67rem; font-weight: 500; padding: 0.2rem 0.6rem; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+    .b-active  { color: var(--green); background: rgba(96,211,148,0.1); }
+    .b-pending { color: var(--amber); background: rgba(244,201,93,0.1); }
+
+    /* CONTACT */
+    .contact-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .contact-desc { font-size: 0.93rem; color: var(--muted); font-weight: 300; line-height: 1.85; margin-bottom: 0.5rem; }
+    .contact-note { font-size: 0.78rem; color: var(--faint); }
+    .contact-links { display: flex; flex-direction: column; }
+    .clink { display: flex; flex-direction: column; gap: 0.1rem; text-decoration: none; padding: 1rem 0; border-bottom: 1px solid var(--border); transition: opacity 0.18s; }
+    .clink:last-child { border-bottom: none; }
+    .clink:hover { opacity: 0.75; }
+    .clink-label { font-size: 0.67rem; font-weight: 500; color: var(--faint); letter-spacing: 0.07em; text-transform: uppercase; }
+    .clink-value { font-size: 0.9rem; color: var(--text); font-weight: 400; }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 0; }
+    .footer-inner { max-width: var(--max); margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+    footer span { font-size: 0.78rem; color: var(--faint); }
+
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.show { opacity: 1; transform: none; }
+
+    @media (max-width: 860px) {
+      .about-body, .research-cols, .contact-cols { grid-template-columns: 1fr; gap: 2.5rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .metrics { gap: 2rem; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .wrap { padding: 0 1.35rem; }
+      section { padding: 5rem 0; }
+      .hero { padding: 5.5rem 0 4rem; min-height: auto; }
+      .skill-row { grid-template-columns: 1fr; gap: 0.3rem; }
+      .btn-row { flex-direction: column; }
+      .btn { justify-content: center; }
+    }
+  </style>
 </head>
+
 <body>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">RA<span> / </span>ANKUNDA</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#research">Research</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section id="hero" style="max-width: none; padding-top: 0; padding-bottom: 0;">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
-  <div class="hero-content">
-    <div class="hero-badge">
-      <span class="badge-dot"></span>
-      Open to SOC Analyst &amp; Cybersecurity Roles
-    </div>
-    <h1 class="hero-name">Ronah<br><span class="accent">Ankunda</span></h1>
-    <p class="hero-title">Cybersecurity Analyst &nbsp;·&nbsp; Threat Detection &nbsp;·&nbsp; AI Security Research</p>
-    <p class="hero-desc">
-      MSc Cybersecurity candidate at Hood College with hands-on SIEM operations, digital forensics, and AI-threat research experience. Published research evaluating LLMs against spear phishing at industrial scale.
-    </p>
-    <div class="hero-buttons">
-      <a href="#resume" class="btn btn-primary">⬇ Download Resume</a>
-      <a href="#research" class="btn btn-outline">View Research</a>
-      <a href="https://github.com/ronah-ankunda" target="_blank" class="btn btn-outline">GitHub</a>
-      <a href="https://www.linkedin.com/in/ronah-ankunda" target="_blank" class="btn btn-outline">LinkedIn</a>
-      <a href="#contact" class="btn btn-ghost">Contact Me →</a>
-    </div>
-  </div>
-</section>
-
-<div class="divider" style="max-width: 1100px; margin: 0 auto;"></div>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label">// 01. About</div>
-  <h2 class="section-title">Who I Am</h2>
-  <div class="about-grid reveal">
-    <div class="about-text">
-      <p>
-        I'm a cybersecurity professional completing an MSc at <strong>Hood College (GPA: 3.77)</strong>, specializing in threat detection, SIEM operations, and AI-augmented security research. My work sits at the intersection of defensive security operations and the emerging threat landscape of AI-generated attacks.
-      </p>
-      <p>
-        My graduate capstone is a peer-reviewed experimental study evaluating <strong>three open-weight LLMs</strong> — DeepSeek-R1, Llama 4 Scout, and Qwen 2.5-72B — for spear phishing detection across a 205-email dataset. The findings provide the first empirical baseline comparing LLM performance specifically against AI-generated phishing content.
-      </p>
-      <p>
-        Professionally, I've operated <strong>SIEM dashboards in production environments</strong> at Forensics Options Ltd (Splunk, QRadar), investigated endpoint alerts, and supported compliance reporting for banking and telecom clients in regulated environments. I bring both analytical precision and clear technical communication to every role.
-      </p>
-      <p>
-        I'm actively seeking <strong>SOC Analyst, Threat Detection, and Cybersecurity Analyst</strong> roles in the United States, with particular interest in organizations building modern, AI-aware security operations.
-      </p>
-    </div>
-    <div class="about-stats">
-      <div class="stat-card">
-        <div class="stat-num">3.77</div>
-        <div class="stat-label">MSc GPA — Hood College</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">2yr</div>
-        <div class="stat-label">SIEM Operations Experience</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">205</div>
-        <div class="stat-label">Email Dataset — Capstone Research</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num">3</div>
-        <div class="stat-label">LLMs Evaluated in Research</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider" style="max-width: 1100px; margin: 0 auto;"></div>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-label">// 02. Skills</div>
-  <h2 class="section-title">Technical Capabilities</h2>
-  <div class="skills-grid reveal">
-    <div class="skill-category">
-      <div class="skill-cat-title">🛡 Security Tools</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Splunk</span>
-        <span class="skill-tag">QRadar</span>
-        <span class="skill-tag">AccessData FTK</span>
-        <span class="skill-tag">Wireshark</span>
-        <span class="skill-tag">Snort</span>
-      </div>
-    </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">🔍 Detection &amp; Response</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Incident Response</span>
-        <span class="skill-tag">Threat Detection</span>
-        <span class="skill-tag">Alert Triage</span>
-        <span class="skill-tag">Log Analysis</span>
-        <span class="skill-tag">False Positive Reduction</span>
-      </div>
-    </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">🔬 Forensics &amp; Analysis</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Digital Forensics</span>
-        <span class="skill-tag">Endpoint Analysis</span>
-        <span class="skill-tag">Malware Analysis Basics</span>
-        <span class="skill-tag">Evidence Acquisition</span>
-      </div>
-    </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">☁ Cloud &amp; Systems</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Windows 10/11</span>
-        <span class="skill-tag">Linux</span>
-        <span class="skill-tag">Microsoft 365</span>
-        <span class="skill-tag">AWS (Basic)</span>
-        <span class="skill-tag">Azure (Basic)</span>
-      </div>
-    </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">💻 Programming &amp; Automation</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Python</span>
-        <span class="skill-tag">SQL</span>
-        <span class="skill-tag">API Integration</span>
-        <span class="skill-tag">Script Automation</span>
-        <span class="skill-tag">Data Analysis</span>
-      </div>
-    </div>
-    <div class="skill-category">
-      <div class="skill-cat-title">📋 GRC &amp; Operations</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Compliance Monitoring</span>
-        <span class="skill-tag">Ticketing Systems</span>
-        <span class="skill-tag">Technical Documentation</span>
-        <span class="skill-tag">Escalation Workflows</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider" style="max-width: 1100px; margin: 0 auto;"></div>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <div class="section-label">// 03. Experience</div>
-  <h2 class="section-title">Professional History</h2>
-  <div class="timeline reveal">
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <div class="timeline-role">IT Graduate Assistant</div>
-        <div class="timeline-date">Jan 2026 — Present</div>
-      </div>
-      <div class="timeline-org">Hood College · Frederick, MD</div>
-      <ul class="timeline-bullets">
-        <li>Deploy and configure laptops and devices for faculty, staff, and students across campus environments.</li>
-        <li>Resolve software, access, and hardware incidents via ticketing system; escalate complex issues to senior IT staff.</li>
-        <li>Produce technical documentation and user-facing guides to reduce repeat support requests.</li>
+  <nav>
+    <div class="nav-inner">
+      <a class="brand" href="#top">Ronah Ankunda</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
+  </nav>
 
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <div class="timeline-role">Security Analyst Intern</div>
-        <div class="timeline-date">Dec 2022 — Jul 2024</div>
-      </div>
-      <div class="timeline-org">Forensics Options Ltd · Kampala, Uganda</div>
-      <ul class="timeline-bullets">
-        <li>Monitored SIEM dashboards (Splunk, QRadar) for real-time threat detection and incident triage, reducing mean response time by 25%.</li>
-        <li>Investigated suspicious events by analyzing logs, user activity, and endpoint alerts to support active incident response workflows.</li>
-        <li>Documented investigation findings and managed escalation procedures in collaboration with senior analysts.</li>
-        <li>Supported compliance reporting and security monitoring for banking and telecom clients in regulated environments.</li>
-      </ul>
-    </div>
+  <main id="top">
 
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <div class="timeline-role">Retail Analyst</div>
-        <div class="timeline-date">Jan 2021 — Oct 2022</div>
-      </div>
-      <div class="timeline-org">Yalelo Uganda Ltd · Kampala, Uganda</div>
-      <ul class="timeline-bullets">
-        <li>Used Microsoft Dynamics 365 to track inventory and identify anomalies supporting operational decision-making.</li>
-        <li>Assisted with system maintenance and troubleshooting to maximize uptime.</li>
-      </ul>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <div class="timeline-role">Banking Officer</div>
-        <div class="timeline-date">Jun 2019 — Dec 2020</div>
-      </div>
-      <div class="timeline-org">Equity Bank Uganda Ltd · Kampala, Uganda</div>
-      <ul class="timeline-bullets">
-        <li>Coordinated with IT to resolve user access issues and maintain stability of online banking systems.</li>
-        <li>Processed 450+ daily transactions involving sensitive client data in full compliance with security policies.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<div class="divider" style="max-width: 1100px; margin: 0 auto;"></div>
-
-<!-- RESEARCH -->
-<div id="research">
-<div class="research-inner">
-  <div class="section-label" style="margin-bottom: 0.5rem;">// 04. Featured Research</div>
-  <div class="research-hero reveal">
-    <div class="research-title-block">
-      <h2>Evaluating <em>LLMs</em> in Detecting Spear Phishing Cyberthreats</h2>
-      <p style="font-family: var(--mono); font-size: 0.7rem; color: var(--muted); margin: 1rem 0; letter-spacing: 0.1em; text-transform: uppercase;">CYBR 560 Capstone · Hood College · Spring 2026</p>
-      <div class="tech-row">
-        <span class="tech-pill">Python</span>
-        <span class="tech-pill">DeepSeek-R1</span>
-        <span class="tech-pill">Llama 4 Scout</span>
-        <span class="tech-pill">Qwen 2.5-72B</span>
-        <span class="tech-pill">OpenRouter API</span>
-        <span class="tech-pill">Groq API</span>
-        <span class="tech-pill">Zero-Shot Prompting</span>
-        <span class="tech-pill">Excel Analytics</span>
-      </div>
-      <div style="margin-top: 1.5rem;">
-        <a href="https://github.com/ronah-ankunda/llm-phishing-detection-capstone" target="_blank" class="btn btn-outline" style="margin-right: 0.5rem; margin-bottom: 0.5rem;">⬡ GitHub Repo</a>
-      </div>
-    </div>
-    <div class="research-abstract">
-      <p style="margin-bottom: 1rem;">
-        <strong>The problem:</strong> AI-generated spear phishing campaigns surpassed human red-team attacks in click-through effectiveness for the first time in March 2025 — outperforming expert attackers by 24%. Traditional rule-based email filters were not built for this environment.
-      </p>
-      <p style="margin-bottom: 1rem;">
-        <strong>The research:</strong> A controlled experiment evaluating three freely available open-weight LLMs — DeepSeek-R1, Llama 4 Scout, and Qwen 2.5-72B — across a 205-email dataset including <strong>legitimate workplace emails, human-crafted phishing, and AI-generated phishing</strong>. Each model used a standardized zero-shot prompt; temperature was set to zero for reproducibility.
-      </p>
-      <p>
-        <strong>The finding:</strong> All three models achieved near-perfect phishing detection (≥98.5% recall) but critically high false positive rates on legitimate emails — ranging from 42.7% to 76%. This coexistence prevents standalone deployment and points toward ensemble architecture as the necessary next step.
-      </p>
-    </div>
-  </div>
-
-  <!-- HEADLINE METRICS -->
-  <div class="section-label mb-1">Overall Performance (n = 205)</div>
-  <div class="metrics-row reveal">
-    <div class="metric-cell">
-      <div class="metric-label">Best Accuracy</div>
-      <div class="metric-value blue">83.4%</div>
-      <div class="metric-model">Qwen 2.5-72B</div>
-    </div>
-    <div class="metric-cell">
-      <div class="metric-label">Perfect Recall</div>
-      <div class="metric-value green">100%</div>
-      <div class="metric-model">DeepSeek-R1</div>
-    </div>
-    <div class="metric-cell">
-      <div class="metric-label">Lowest False Positive Rate</div>
-      <div class="metric-value purple">42.7%</div>
-      <div class="metric-model">Qwen 2.5-72B</div>
-    </div>
-    <div class="metric-cell">
-      <div class="metric-label">Highest False Positive Rate</div>
-      <div class="metric-value red">76.0%</div>
-      <div class="metric-model">Llama 4 Scout</div>
-    </div>
-  </div>
-
-  <!-- BAR CHARTS -->
-  <div class="reveal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem;">
-    <div class="chart-section">
-      <div class="chart-label">Overall Accuracy by Model</div>
-      <div class="bar-chart">
-        <div class="bar-row">
-          <div class="bar-model">DeepSeek-R1</div>
-          <div class="bar-track"><div class="bar-fill blue" data-width="75.1">75.1%</div></div>
-          <div class="bar-pct">75.1%</div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-model">Llama 4 Scout</div>
-          <div class="bar-track"><div class="bar-fill accent" data-width="71.7">71.7%</div></div>
-          <div class="bar-pct">71.7%</div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-model">Qwen 2.5-72B</div>
-          <div class="bar-track"><div class="bar-fill green" data-width="83.4">83.4%</div></div>
-          <div class="bar-pct">83.4%</div>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap reveal">
+        <div class="hero-status"><span class="dot"></span>SOC · Threat Detection · AI Security Research</div>
+        <h1>Ronah Ankunda</h1>
+        <p class="hero-lead">Cybersecurity analyst focused on threat detection, SIEM operations, and AI security research. MSc candidate at Hood College, graduating May 2026.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="Ronah_Ankunda_CV.pdf" download>Download Resume</a>
+          <a class="btn btn-ghost" href="#research">View Research</a>
+          <a class="btn btn-ghost" href="https://github.com/ronah-ankunda" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/ronah-ankunda" target="_blank" rel="noreferrer">LinkedIn</a>
         </div>
       </div>
-    </div>
-    <div class="chart-section">
-      <div class="chart-label">False Positive Rate on Legitimate Emails</div>
-      <div class="bar-chart">
-        <div class="bar-row">
-          <div class="bar-model">DeepSeek-R1</div>
-          <div class="bar-track"><div class="bar-fill red" data-width="68.0">68.0%</div></div>
-          <div class="bar-pct">68.0%</div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-model">Llama 4 Scout</div>
-          <div class="bar-track"><div class="bar-fill red" data-width="76.0">76.0%</div></div>
-          <div class="bar-pct">76.0%</div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-model">Qwen 2.5-72B</div>
-          <div class="bar-track"><div class="bar-fill purple" data-width="42.7">42.7%</div></div>
-          <div class="bar-pct">42.7%</div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- FULL METRICS TABLE -->
-  <div class="section-label mb-1">Table 1 — Overall Performance Metrics (n = 205)</div>
-  <div class="reveal" style="overflow-x: auto; margin-bottom: 3rem;">
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>Model</th>
-          <th>Accuracy</th>
-          <th>Precision</th>
-          <th>Recall</th>
-          <th>F1-Score</th>
-          <th>FPR</th>
-          <th>TP / TN / FP / FN</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>DeepSeek-R1</td>
-          <td>0.751</td>
-          <td>0.718</td>
-          <td class="badge-green">1.000</td>
-          <td>0.836</td>
-          <td class="badge-red">0.680</td>
-          <td>130 / 24 / 51 / 0</td>
-        </tr>
-        <tr>
-          <td>Llama 4 Scout</td>
-          <td>0.717</td>
-          <td>0.694</td>
-          <td>0.992</td>
-          <td>0.816</td>
-          <td class="badge-red">0.760</td>
-          <td>129 / 18 / 57 / 1</td>
-        </tr>
-        <tr>
-          <td>Qwen 2.5-72B</td>
-          <td class="badge-blue">0.834</td>
-          <td class="badge-blue">0.800</td>
-          <td>0.985</td>
-          <td class="badge-blue">0.883</td>
-          <td class="badge-green">0.427</td>
-          <td>128 / 43 / 32 / 2</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- CONFUSION MATRICES -->
-  <div class="section-label mb-1">Confusion Matrices (Full Dataset, n = 205)</div>
-  <div class="matrix-grid reveal">
-    <div class="matrix-card">
-      <div class="matrix-card-title">DeepSeek-R1</div>
-      <table class="matrix-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Pred: Phishing</th>
-            <th>Pred: Legit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="cell-label">Actual: Phishing</td>
-            <td class="cell-tp">130 TP</td>
-            <td class="cell-fn">0 FN</td>
-          </tr>
-          <tr>
-            <td class="cell-label">Actual: Legit</td>
-            <td class="cell-fp">51 FP</td>
-            <td class="cell-tn">24 TN</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="matrix-card">
-      <div class="matrix-card-title">Llama 4 Scout</div>
-      <table class="matrix-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Pred: Phishing</th>
-            <th>Pred: Legit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="cell-label">Actual: Phishing</td>
-            <td class="cell-tp">129 TP</td>
-            <td class="cell-fn">1 FN</td>
-          </tr>
-          <tr>
-            <td class="cell-label">Actual: Legit</td>
-            <td class="cell-fp">57 FP</td>
-            <td class="cell-tn">18 TN</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="matrix-card">
-      <div class="matrix-card-title">Qwen 2.5-72B</div>
-      <table class="matrix-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Pred: Phishing</th>
-            <th>Pred: Legit</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="cell-label">Actual: Phishing</td>
-            <td class="cell-tp">128 TP</td>
-            <td class="cell-fn">2 FN</td>
-          </tr>
-          <tr>
-            <td class="cell-label">Actual: Legit</td>
-            <td class="cell-fp">32 FP</td>
-            <td class="cell-tn">43 TN</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- KEY FINDINGS -->
-  <div class="section-label mb-1">Key Findings</div>
-  <div class="findings-grid reveal">
-    <div class="finding-card positive">
-      <div class="finding-icon">✓</div>
-      <div class="finding-title">Near-Perfect Phishing Detection</div>
-      <div class="finding-desc">All three models detected both human-crafted and AI-generated phishing at ≥98.5% accuracy. AI-generated phishing posed no additional detection challenge — a significant finding given it now accounts for ~51% of malicious email volume.</div>
-    </div>
-    <div class="finding-card negative">
-      <div class="finding-icon">⚠</div>
-      <div class="finding-title">Critically High False Positives</div>
-      <div class="finding-desc">False positive rates ranged from 42.7% (Qwen) to 76% (Llama). Models systematically misread normal professional email features — urgency language, action requests, links — as threat indicators. Standalone deployment is not operationally viable.</div>
-    </div>
-    <div class="finding-card neutral">
-      <div class="finding-icon">→</div>
-      <div class="finding-title">Ensemble Architecture Required</div>
-      <div class="finding-desc">High recall + high FPR points to a clear role: these models are strong phishing detection layers within multi-layered ensemble systems, not autonomous classifiers. Hybrid architecture pairing LLM detection with a legitimacy classifier is the recommended path.</div>
-    </div>
-  </div>
-
-  <!-- DATASET -->
-  <div class="section-label mb-1" style="margin-top: 1rem;">Dataset Composition</div>
-  <div class="reveal" style="overflow-x: auto; margin-bottom: 2rem;">
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>Category</th>
-          <th>Count</th>
-          <th>Method</th>
-          <th>Purpose</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Legitimate Workplace Emails</td>
-          <td class="badge-blue">75</td>
-          <td>Manually authored by researcher</td>
-          <td>Baseline for false-positive measurement</td>
-        </tr>
-        <tr>
-          <td>Human-Crafted Spear Phishing</td>
-          <td class="badge-blue">65</td>
-          <td>Manually created (credential harvest, CEO impersonation, financial requests)</td>
-          <td>Traditional attack vector baseline</td>
-        </tr>
-        <tr>
-          <td>AI-Generated Spear Phishing</td>
-          <td class="badge-blue">65</td>
-          <td>ChatGPT-generated for realism and variation</td>
-          <td>Novel threat category absent from legacy benchmarks</td>
-        </tr>
-        <tr style="border-top: 2px solid rgba(0,212,255,0.3);">
-          <td><strong>Total</strong></td>
-          <td class="badge-green"><strong>205</strong></td>
-          <td colspan="2">Ground-truth labeled, standardized zero-shot evaluation</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-</div>
-
-<div class="divider" style="max-width: 1100px; margin: 0 auto;"></div>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-label">// 05. Additional Projects</div>
-  <h2 class="section-title">Security Labs &amp; Work</h2>
-  <div class="projects-grid reveal">
-    <div class="project-card">
-      <div class="project-icon">📡</div>
-      <div class="project-name">Snort ICMP Lab</div>
-      <div class="project-desc">Configured Snort IDS rules to detect and alert on ICMP-based reconnaissance activity. Validated detection against live packet captures and documented rule logic.</div>
-      <div class="project-tags">
-        <span class="project-tag">Snort</span>
-        <span class="project-tag">IDS</span>
-        <span class="project-tag">Linux</span>
-        <span class="project-tag">Packet Analysis</span>
-      </div>
-      <div style="margin-top: 1rem;">
-        <a href="https://github.com/ronah-ankunda/snort-icmp-lab" target="_blank" class="btn btn-ghost" style="padding: 0.4rem 0; font-size: 0.65rem;">→ GitHub</a>
-      </div>
-    </div>
-    <div class="project-card">
-      <div class="project-icon">🔭</div>
-      <div class="project-name">Wireshark Traffic Analysis</div>
-      <div class="project-desc">Captured and analyzed network traffic to identify anomalies, filter protocols, and reconstruct suspicious communication flows using display filters and stream analysis.</div>
-      <div class="project-tags">
-        <span class="project-tag">Wireshark</span>
-        <span class="project-tag">Network Forensics</span>
-        <span class="project-tag">Protocol Analysis</span>
-      </div>
-    </div>
-    <div class="project-card">
-      <div class="project-icon">🗂</div>
-      <div class="project-name">Digital Forensics Investigation</div>
-      <div class="project-desc">Conducted a full forensic examination of disk images using AccessData FTK. Recovered deleted files, analyzed registry artifacts, and produced a structured forensic report following chain-of-custody procedures.</div>
-      <div class="project-tags">
-        <span class="project-tag">AccessData FTK</span>
-        <span class="project-tag">Disk Forensics</span>
-        <span class="project-tag">Evidence Analysis</span>
-      </div>
-    </div>
-    <div class="project-card">
-      <div class="project-icon">🚨</div>
-      <div class="project-name">SIEM Alert Investigation</div>
-      <div class="project-desc">Triaged multi-source SIEM alerts using Splunk, correlating user activity, endpoint logs, and network events to classify incidents and document response actions.</div>
-      <div class="project-tags">
-        <span class="project-tag">Splunk</span>
-        <span class="project-tag">QRadar</span>
-        <span class="project-tag">Alert Triage</span>
-        <span class="project-tag">Incident Response</span>
-      </div>
-    </div>
-    <div class="project-card">
-      <div class="project-icon">🐍</div>
-      <div class="project-name">Log Analysis Automation</div>
-      <div class="project-desc">Built Python scripts to automate API-based email classification across a 205-email dataset, handling rate limit interruptions, resume logic, and structured output to Excel for quantitative analysis.</div>
-      <div class="project-tags">
-        <span class="project-tag">Python</span>
-        <span class="project-tag">API Integration</span>
-        <span class="project-tag">Automation</span>
-        <span class="project-tag">Data Analysis</span>
-      </div>
-    </div>
-    <div class="project-card">
-      <div class="project-icon">📊</div>
-      <div class="project-name">LLM Phishing Detection — Capstone</div>
-      <div class="project-desc">Experimental evaluation of 3 open-weight LLMs for spear phishing detection across 205 emails including AI-generated phishing content. Full quantitative analysis with confusion matrices and F1-score breakdowns.</div>
-      <div class="project-tags">
-        <span class="project-tag">Research</span>
-        <span class="project-tag">LLM</span>
-        <span class="project-tag">Python</span>
-        <span class="project-tag">Security AI</span>
-      </div>
-      <div style="margin-top: 1rem;">
-        <a href="https://github.com/ronah-ankunda/llm-phishing-detection-capstone" target="_blank" class="btn btn-ghost" style="padding: 0.4rem 0; font-size: 0.65rem;">→ GitHub</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider" style="max-width: 1100px; margin: 0 auto;"></div>
-
-<!-- CERTS -->
-<section id="certifications">
-  <div class="section-label">// 06. Certifications &amp; Education</div>
-  <h2 class="section-title">Credentials</h2>
-  <div class="certs-grid reveal">
-    <div class="cert-card">
-      <div class="cert-icon">🔒</div>
-      <div>
-        <div class="cert-name">CompTIA Security+ (SY0-701)</div>
-        <div class="cert-org">CompTIA</div>
-        <div class="cert-status pending">⏳ Expected June 2026</div>
-      </div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-icon">📊</div>
-      <div>
-        <div class="cert-name">Splunk Core Certified User</div>
-        <div class="cert-org">Splunk</div>
-        <div class="cert-status active">✓ Certified — July 2025</div>
-      </div>
-    </div>
-    <div class="cert-card">
-      <div class="cert-icon">🌐</div>
-      <div>
-        <div class="cert-name">Google Cybersecurity Certificate</div>
-        <div class="cert-org">Google / Coursera</div>
-        <div class="cert-status active">✓ Certified — March 2024</div>
-      </div>
-    </div>
-  </div>
-
-  <div style="margin-top: 2.5rem;" class="reveal">
-    <div class="section-label mb-1">Education</div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-      <div class="cert-card" style="flex-direction: column; gap: 0.5rem;">
-        <div style="display: flex; gap: 1rem; align-items: flex-start;">
-          <div class="cert-icon">🎓</div>
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="wrap reveal">
+        <span class="section-label">About</span>
+        <h2>Background</h2>
+        <p class="section-intro">Security operations experience, graduate cybersecurity training, and AI threat research. Grounded in practical work across forensics, network security, and offensive security labs.</p>
+        <div class="about-body">
           <div>
-            <div class="cert-name">MSc in Cybersecurity</div>
-            <div class="cert-org">Hood College · Frederick, MD</div>
-            <div class="cert-status pending">Expected May 2026 · GPA 3.77</div>
+            <p>I'm completing an MSc in Cybersecurity at Hood College (GPA 3.77), building on two years of SIEM operations experience at Forensics Options Ltd, monitoring Splunk and QRadar, triaging incidents, and supporting security work for banking and telecom clients in regulated environments.</p>
+            <p>My graduate work spans digital forensics investigations using AccessData FTK, penetration testing with Metasploit and Burp Suite, network traffic analysis with Wireshark, and network security topics including TCP/IP attacks, IPsec, and intrusion detection systems.</p>
+            <p>My capstone research evaluated three open-weight LLMs against a 205-email spear phishing dataset, including AI-generated attacks, providing an empirical baseline for how these models perform in real security operations contexts.</p>
+            <p>I'm looking for SOC Analyst, Threat Detection, and Cybersecurity Analyst roles where operational experience and research background both matter.</p>
+          </div>
+          <div class="about-details">
+            <div class="detail-row"><div class="detail-label">Education</div><div class="detail-value">MSc Cybersecurity, Hood College</div></div>
+            <div class="detail-row"><div class="detail-label">GPA</div><div class="detail-value">3.77</div></div>
+            <div class="detail-row"><div class="detail-label">Graduating</div><div class="detail-value">May 2026</div></div>
+            <div class="detail-row"><div class="detail-label">Location</div><div class="detail-value">Frederick, MD · Open to relocation</div></div>
           </div>
         </div>
       </div>
-      <div class="cert-card">
-        <div class="cert-icon">🎓</div>
-        <div>
-          <div class="cert-name">BSc in Office and Information Management</div>
-          <div class="cert-org">Makerere University · Uganda</div>
-          <div class="cert-status active">Graduated 2019 · GPA 3.63</div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="wrap reveal">
+        <span class="section-label">Skills</span>
+        <h2>Technical capabilities</h2>
+        <p class="section-intro">Built through coursework, labs, and operational security experience across SOC, DFIR, network security, and AI security domains.</p>
+        <div class="skills-table">
+          <div class="skill-row"><span class="skill-cat">Detection & monitoring</span><div class="tags"><span class="tag">Splunk</span><span class="tag">QRadar</span><span class="tag">Log Analysis</span><span class="tag">Alert Triage</span><span class="tag">Incident Response</span><span class="tag">Intrusion Detection</span></div></div>
+          <div class="skill-row"><span class="skill-cat">Digital forensics</span><div class="tags"><span class="tag">AccessData FTK</span><span class="tag">FTK Imager</span><span class="tag">Registry Analysis</span><span class="tag">Timeline Analysis</span><span class="tag">Evidence Handling</span><span class="tag">Hex Editor</span></div></div>
+          <div class="skill-row"><span class="skill-cat">Network security</span><div class="tags"><span class="tag">Wireshark</span><span class="tag">Snort</span><span class="tag">TCP/IP</span><span class="tag">Packet Analysis</span><span class="tag">IPsec</span><span class="tag">ICMP Analysis</span></div></div>
+          <div class="skill-row"><span class="skill-cat">Offensive security</span><div class="tags"><span class="tag">Kali Linux</span><span class="tag">Metasploit</span><span class="tag">Burp Suite</span><span class="tag">Nmap</span><span class="tag">Netcat</span><span class="tag">enum4linux</span></div></div>
+          <div class="skill-row"><span class="skill-cat">AI & analytics</span><div class="tags"><span class="tag">LLM Evaluation</span><span class="tag">Phishing Detection</span><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Data Analysis</span></div></div>
+          <div class="skill-row"><span class="skill-cat">Systems & cloud</span><div class="tags"><span class="tag">Windows</span><span class="tag">Linux</span><span class="tag">Microsoft 365</span><span class="tag">AWS</span><span class="tag">Azure</span></div></div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<div class="divider" style="max-width: 1100px; margin: 0 auto;"></div>
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="wrap reveal">
+        <span class="section-label">Experience</span>
+        <h2>Work history</h2>
+        <p class="section-intro">Security operations, incident triage, and IT support. Directly relevant to SOC and analyst roles.</p>
+        <div class="exp-list">
 
-<!-- RESUME -->
-<div id="resume">
-  <div class="resume-inner">
-    <div class="reveal">
-      <div class="section-label">// 07. Resume</div>
-      <h2 class="section-title" style="margin-bottom: 1.5rem;">Download My CV</h2>
-      <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; font-weight: 300;">Full resume including all experience, research, certifications, and technical skills. Formatted for ATS and recruiter review.</p>
-      <a href="Ronah_Ankunda_CV.pdf" download class="btn btn-primary" style="display: inline-flex;">⬇ Download Resume (PDF)</a>
-    </div>
-    <div class="reveal">
-      <ul class="resume-highlights">
-        <li>MSc Cybersecurity — Hood College, GPA 3.77</li>
-        <li>2+ years SIEM operations (Splunk, QRadar)</li>
-        <li>Capstone research: LLM-based threat detection</li>
-        <li>Digital forensics with AccessData FTK</li>
-        <li>Incident response &amp; alert triage experience</li>
-        <li>Compliance monitoring in regulated environments</li>
-        <li>Python automation for security workflows</li>
-        <li>Splunk Core Certified | Google Cybersecurity Certificate</li>
-      </ul>
-    </div>
-  </div>
-</div>
+          <div class="exp-item">
+            <div><div class="exp-date">Jan 2026 – Present</div><div class="exp-org">Hood College · Frederick, MD</div></div>
+            <div>
+              <div class="exp-role">IT Graduate Assistant</div>
+              <ul class="exp-bullets">
+                <li>Deploy and configure devices for faculty, staff, and students.</li>
+                <li>Resolve software and hardware incidents via ticketing system; escalate as needed.</li>
+                <li>Produce technical documentation to reduce repeat support requests.</li>
+              </ul>
+            </div>
+          </div>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-label">// 08. Contact</div>
-  <h2 class="section-title">Let's Connect</h2>
-  <div class="contact-grid reveal">
-    <div>
-      <p class="contact-blurb">
-        I'm actively seeking SOC Analyst, Cybersecurity Analyst, and Threat Detection roles in the United States, with a preference for teams building modern, AI-aware security operations. Feel free to reach out directly — I respond promptly.
-      </p>
-      <p class="text-muted">📍 Frederick, Maryland, USA &nbsp;|&nbsp; Open to remote and hybrid roles</p>
-    </div>
-    <div class="contact-links">
-      <a href="mailto:rnkunda3@gmail.com" class="contact-link">
-        <div class="contact-icon">✉</div>
-        <div>
-          <span class="contact-link-label">Email</span>
-          rnkunda3@gmail.com
+          <div class="exp-item">
+            <div><div class="exp-date">Dec 2022 – Jul 2024</div><div class="exp-org">Forensics Options Ltd · Kampala, Uganda</div></div>
+            <div>
+              <div class="exp-role">Security Analyst Intern</div>
+              <ul class="exp-bullets">
+                <li>Monitored Splunk and QRadar SIEM dashboards for real-time threat detection, reducing response time by 25%.</li>
+                <li>Investigated suspicious events by analyzing logs, user activity, and endpoint alerts.</li>
+                <li>Documented findings and managed escalation workflows with senior analysts.</li>
+                <li>Supported compliance reporting for banking and telecom clients in regulated environments.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div><div class="exp-date">Jan 2021 – Oct 2022</div><div class="exp-org">Yalelo Uganda Ltd</div></div>
+            <div>
+              <div class="exp-role">Retail Analyst</div>
+              <ul class="exp-bullets">
+                <li>Used Microsoft Dynamics 365 to track inventory and identify operational anomalies.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="exp-item">
+            <div><div class="exp-date">Jun 2019 – Dec 2020</div><div class="exp-org">Equity Bank Uganda Ltd</div></div>
+            <div>
+              <div class="exp-role">Banking Officer</div>
+              <ul class="exp-bullets">
+                <li>Coordinated with IT to resolve access issues and maintain online banking systems.</li>
+                <li>Processed 450+ daily transactions with sensitive client data in full compliance with security policies.</li>
+              </ul>
+            </div>
+          </div>
+
         </div>
-      </a>
-      <a href="https://www.linkedin.com/in/ronah-ankunda" target="_blank" class="contact-link">
-        <div class="contact-icon">in</div>
-        <div>
-          <span class="contact-link-label">LinkedIn</span>
-          linkedin.com/in/ronah-ankunda
+      </div>
+    </section>
+
+    <!-- RESEARCH -->
+    <section id="research">
+      <div class="wrap reveal">
+        <span class="section-label">Featured Research</span>
+        <h2>LLMs for spear phishing detection</h2>
+        <p class="section-intro">Graduate capstone (CYBR 560 · Hood College · Spring 2026), evaluating whether open-weight LLMs can support email threat detection in security operations environments.</p>
+
+        <div class="research-cols">
+          <div>
+            <p style="font-size:0.93rem; margin-bottom: 0.75rem;">Evaluated DeepSeek-R1, Llama 4 Scout, and Qwen 2.5-72B on a 205-email dataset of legitimate workplace emails, human-crafted phishing, and AI-generated phishing, a threat category absent from most existing benchmarks. Each model used a standardized zero-shot prompt with temperature set to zero for reproducibility.</p>
+
+            <div class="finding">
+              <p>All three models detected phishing with near-perfect accuracy. But they also flagged 43–76% of legitimate workplace emails as threats, misreading normal professional language as indicators of attack. <strong>The practical conclusion: these models work best as one detection layer within a broader system, not as standalone classifiers.</strong></p>
+            </div>
+
+            <div class="metrics">
+              <div>
+                <div class="metric-num" style="color: var(--accent);">83.4%</div>
+                <div class="metric-desc">Best overall accuracy<br>Qwen 2.5-72B</div>
+              </div>
+              <div>
+                <div class="metric-num" style="color: var(--green);">100%</div>
+                <div class="metric-desc">Best phishing recall<br>DeepSeek-R1 · 0 missed</div>
+              </div>
+              <div>
+                <div class="metric-num" style="color: var(--amber);">42.7%</div>
+                <div class="metric-desc">Lowest false positive rate<br>Qwen 2.5-72B</div>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <a class="btn btn-primary" href="https://github.com/ronah-ankunda/llm-phishing-detection-capstone" target="_blank" rel="noreferrer">View on GitHub</a>
+              <a class="btn btn-ghost" href="Ankunda_Ronah_CYBR560_Capstone.pdf" target="_blank">Read Paper</a>
+            </div>
+          </div>
+
+          <div>
+            <div class="model-card">
+              <div class="model-card-title">Model comparison</div>
+              <div class="model-row">
+                <div><div class="model-name">Qwen 2.5-72B</div><div class="model-note">Best overall balance</div></div>
+                <div class="model-scores"><span class="score-main">83.4% accuracy</span><span class="score-fpr warn">42.7% FPR</span></div>
+              </div>
+              <div class="model-row">
+                <div><div class="model-name">DeepSeek-R1</div><div class="model-note">Perfect phishing recall</div></div>
+                <div class="model-scores"><span class="score-main">100% recall</span><span class="score-fpr warn">68.0% FPR</span></div>
+              </div>
+              <div class="model-row">
+                <div><div class="model-name">Llama 4 Scout</div><div class="model-note">Strong detection, high FPR</div></div>
+                <div class="model-scores"><span class="score-main">99.2% recall</span><span class="score-fpr warn">76.0% FPR</span></div>
+              </div>
+            </div>
+
+            <div class="data-details">
+              <details>
+                <summary>Full performance metrics</summary>
+                <div class="details-body">
+                  <table class="dt">
+                    <thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>FPR</th></tr></thead>
+                    <tbody>
+                      <tr><td>DeepSeek-R1</td><td>0.751</td><td>0.718</td><td class="tg">1.000</td><td>0.836</td><td class="tr">0.680</td></tr>
+                      <tr><td>Llama 4 Scout</td><td>0.717</td><td>0.694</td><td>0.992</td><td>0.816</td><td class="tr">0.760</td></tr>
+                      <tr><td>Qwen 2.5-72B</td><td class="tb">0.834</td><td class="tb">0.800</td><td>0.985</td><td class="tb">0.883</td><td class="tg">0.427</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+              <details>
+                <summary>Dataset breakdown</summary>
+                <div class="details-body">
+                  <table class="dt">
+                    <thead><tr><th>Category</th><th>n</th><th>Method</th></tr></thead>
+                    <tbody>
+                      <tr><td>Legitimate emails</td><td>75</td><td>Manually authored by researcher</td></tr>
+                      <tr><td>Human-crafted phishing</td><td>65</td><td>Credential harvest, CEO impersonation, financial requests</td></tr>
+                      <tr><td>AI-generated phishing</td><td>65</td><td>ChatGPT-generated for realism and variation</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            </div>
+          </div>
         </div>
-      </a>
-      <a href="https://github.com/ronah-ankunda" target="_blank" class="contact-link">
-        <div class="contact-icon">⬡</div>
-        <div>
-          <span class="contact-link-label">GitHub</span>
-          github.com/ronah-ankunda
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="wrap reveal">
+        <span class="section-label">Projects</span>
+        <h2>Selected work</h2>
+        <p class="section-intro">Hands-on labs and investigations across digital forensics, offensive security, network analysis, and security operations.</p>
+
+        <!-- DIGITAL FORENSICS -->
+        <div class="project-group">
+          <div class="group-header">
+            <h3>Digital Forensics</h3>
+            <p>Evidence acquisition, artifact analysis, and investigative reporting using AccessData FTK</p>
+          </div>
+          <div class="projects-grid">
+            <article class="project">
+              <h3>Clampet Illegal Whiskey Production: Forensic Investigation</h3>
+              <p>Conducted a full forensic investigation on the Clampet18.aff disk image using AccessData FTK. Identified the primary suspect (Granny/Daisy Moses) through browser cache artifacts, recovered moonshine recipes, a password-protected customer spreadsheet on the desktop, and internet search history corroborating witness statements. Created bookmarks and produced a structured forensic report with timestamped evidence.</p>
+              <div class="tags"><span class="tag">AccessData FTK</span><span class="tag">Browser Forensics</span><span class="tag">Disk Image Analysis</span><span class="tag">Evidence Reporting</span></div>
+            </article>
+            <article class="project">
+              <h3>Registry and User Account Analysis: Washer Image</h3>
+              <p>Used FTK Imager to export SAM and SYSTEM registry files from the Washer.E01 image. Analyzed user accounts, account metadata, and registry artifacts using AccessData Registry Viewer to support investigative conclusions.</p>
+              <div class="tags"><span class="tag">FTK Imager</span><span class="tag">Registry Viewer</span><span class="tag">SAM Analysis</span><span class="tag">User Attribution</span></div>
+            </article>
+            <article class="project">
+              <h3>Linux Filesystem and Inode Analysis: NIST Image</h3>
+              <p>Loaded a Linux disk image (Ubuntu, Ext3 filesystem) in FTK Imager and analyzed filesystem artifacts including inodes, directory structures, and file metadata to draw investigative conclusions about user activity.</p>
+              <div class="tags"><span class="tag">FTK Imager</span><span class="tag">Linux Forensics</span><span class="tag">Ext3</span><span class="tag">Inode Analysis</span></div>
+            </article>
+            <article class="project">
+              <h3>Hex Editor & Log Analysis</h3>
+              <p>Used a hex editor to examine raw file data at the byte level, analyzing file headers and identifying artifacts not visible at the application layer. Combined with basic log analysis to correlate events and support forensic findings.</p>
+              <div class="tags"><span class="tag">Hex Editor</span><span class="tag">Log Analysis</span><span class="tag">File Artifacts</span><span class="tag">Binary Analysis</span></div>
+            </article>
+          </div>
         </div>
-      </a>
+
+        <!-- OFFENSIVE SECURITY -->
+        <div class="project-group">
+          <div class="group-header">
+            <h3>Offensive Security & Penetration Testing</h3>
+            <p>Vulnerability exploitation, web application testing, and network service attacks in controlled lab environments</p>
+          </div>
+          <div class="projects-grid">
+            <article class="project">
+              <h3>Metasploitable2: SMB Exploitation with Metasploit</h3>
+              <p>Used enum4linux for unauthenticated SMB enumeration against Metasploitable2, identifying users, password policies, and SIDs. Detected Samba 3.0.20-Debian via Metasploit auxiliary scanner, then exploited the usermap_script vulnerability (CVE-2007-2447) to gain a reverse shell. Cracked password hashes using John the Ripper.</p>
+              <div class="tags"><span class="tag">Metasploit</span><span class="tag">enum4linux</span><span class="tag">Nmap</span><span class="tag">John the Ripper</span><span class="tag">SMB</span></div>
+              <a href="https://github.com/ronah-ankunda/snort-icmp-lab" class="project-link">GitHub →</a>
+            </article>
+            <article class="project">
+              <h3>DVWA: Web Application Command Injection</h3>
+              <p>Exploited command injection vulnerabilities in DVWA (Damn Vulnerable Web App) running on Metasploitable2. Analyzed PHP source code to identify unvalidated input handling, injected OS commands alongside ping requests to enumerate system users and escalate access. Operated from Kali Linux with Burp Suite for traffic interception.</p>
+              <div class="tags"><span class="tag">Burp Suite</span><span class="tag">DVWA</span><span class="tag">Command Injection</span><span class="tag">Kali Linux</span><span class="tag">PHP Analysis</span></div>
+            </article>
+            <article class="project">
+              <h3>Tiger Team Penetration Test Analysis</h3>
+              <p>Analyzed a real-world blackbox penetration test against a high-security jewelry firm. Mapped the full attack chain: social engineering for physical access, RFID card cloning, motion sensor evasion, USB-based backdoor deployment, and safe cracking. Identified failure points across physical, network, and human security layers.</p>
+              <div class="tags"><span class="tag">Penetration Testing</span><span class="tag">Social Engineering</span><span class="tag">Physical Security</span><span class="tag">RFID</span><span class="tag">Blackbox Testing</span></div>
+            </article>
+            <article class="project">
+              <h3>Wireless Network Exploitation: WEP/WPA Cracking</h3>
+              <p>Analyzed a packet capture file (Lab23.cap) in Wireshark to identify the target network channel, SSID, and a deauthentication flood attack (DoS). Used aircrack-ng in Kali Linux to crack the wireless password and reconstruct the victim's network activity.</p>
+              <div class="tags"><span class="tag">Wireshark</span><span class="tag">aircrack-ng</span><span class="tag">WEP/WPA</span><span class="tag">Kali Linux</span><span class="tag">Packet Capture</span></div>
+            </article>
+          </div>
+        </div>
+
+        <!-- NETWORK SECURITY -->
+        <div class="project-group">
+          <div class="group-header">
+            <h3>Network Security & Traffic Analysis</h3>
+            <p>Protocol analysis, attack simulation, and traffic inspection across TCP/IP, ICMP, and application layers</p>
+          </div>
+          <div class="projects-grid">
+            <article class="project">
+              <h3>ICMP Redirect Attack: Routing Table Manipulation</h3>
+              <p>Set up a Docker-based lab environment and crafted spoofed ICMP redirect messages using Scapy to manipulate a victim's routing table, redirecting traffic through a malicious gateway (MITM). Analyzed the attack mechanism and compared it structurally to the Heartbleed vulnerability, both exploiting unvalidated input trust.</p>
+              <div class="tags"><span class="tag">Scapy</span><span class="tag">ICMP</span><span class="tag">Docker</span><span class="tag">MITM</span><span class="tag">Routing Attack</span></div>
+            </article>
+            <article class="project">
+              <h3>Heartbleed Vulnerability Analysis (CVE-2014-0160)</h3>
+              <p>Analyzed the Heartbleed OpenSSL vulnerability, tracing how the memcpy() function trusted unverified payload lengths allowing buffer over-reads of up to 64KB of server memory including private keys and session cookies. Connected to ICMP redirect mechanics via shared principle of unvalidated trust in input.</p>
+              <div class="tags"><span class="tag">OpenSSL</span><span class="tag">CVE Analysis</span><span class="tag">TLS/SSL</span><span class="tag">Buffer Over-read</span><span class="tag">Network Security</span></div>
+            </article>
+            <article class="project">
+              <h3>Network Traffic Analysis: Wireshark</h3>
+              <p>Analyzed packet captures to identify web server IP, user-agent strings, proxy configuration (nginx 1.19.7), and proxy port (3128) using HTTP and TCP filters. Reconstructed client-server-proxy communication flows from raw packet data.</p>
+              <div class="tags"><span class="tag">Wireshark</span><span class="tag">HTTP Analysis</span><span class="tag">Proxy Analysis</span><span class="tag">TCP Filtering</span></div>
+            </article>
+            <article class="project">
+              <h3>IPsec & Network Security Protocols</h3>
+              <p>Studied IPsec Authentication Header (AH) and Encapsulation Security Payload (ESP) protocols, IKE phase negotiation, transport vs. tunnel mode, and MAC calculation. Applied to practical understanding of VPN architecture and enterprise network security.</p>
+              <div class="tags"><span class="tag">IPsec</span><span class="tag">AH / ESP</span><span class="tag">VPN</span><span class="tag">IKE</span><span class="tag">Network Protocols</span></div>
+            </article>
+          </div>
+        </div>
+
+        <!-- AI & SOC -->
+        <div class="project-group">
+          <div class="group-header">
+            <h3>AI Security & SOC Operations</h3>
+            <p>LLM evaluation for threat detection, intrusion detection systems, and Python automation</p>
+          </div>
+          <div class="projects-grid">
+            <article class="project">
+              <h3>LLM Spear Phishing Detection: Capstone Research</h3>
+              <p>Evaluated DeepSeek-R1, Llama 4 Scout, and Qwen 2.5-72B on a 205-email dataset including AI-generated phishing. Automated evaluation pipeline in Python using OpenRouter and Groq APIs (zero-shot, temperature=0). Full quantitative analysis: accuracy, precision, recall, F1, false positive rates, and confusion matrices.</p>
+              <div class="tags"><span class="tag">Python</span><span class="tag">LLM Evaluation</span><span class="tag">API Automation</span><span class="tag">Security AI</span><span class="tag">Research</span></div>
+              <a href="https://github.com/ronah-ankunda/llm-phishing-detection-capstone" class="project-link">GitHub →</a>
+            </article>
+            <article class="project">
+              <h3>Intrusion Detection: Statistical and Rule-Based Methods</h3>
+              <p>Analyzed statistical anomaly detection (threshold and profile-based) versus rule-based IDS approaches. Modeled detection metrics including counters, gauges, interval timers, and resource utilization. Applied to real-world IDS deployment scenarios for SOC environments.</p>
+              <div class="tags"><span class="tag">IDS</span><span class="tag">Anomaly Detection</span><span class="tag">Snort</span><span class="tag">SOC Operations</span><span class="tag">Security Monitoring</span></div>
+            </article>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CERTS -->
+    <section id="credentials">
+      <div class="wrap reveal">
+        <span class="section-label">Credentials</span>
+        <h2>Certifications & education</h2>
+        <p class="section-intro">Certifications and academic training aligned with SOC analyst and cybersecurity analyst roles.</p>
+        <div class="certs-list">
+          <div class="cert-row"><div><div class="cert-name">CompTIA Security+ (SY0-701)</div><div class="cert-issuer">CompTIA</div></div><span class="badge b-pending">Expected Jun 2026</span></div>
+          <div class="cert-row"><div><div class="cert-name">Splunk Core Certified User</div><div class="cert-issuer">Splunk</div></div><span class="badge b-active">Jul 2025</span></div>
+          <div class="cert-row"><div><div class="cert-name">Google Cybersecurity Certificate</div><div class="cert-issuer">Google / Coursera</div></div><span class="badge b-active">Mar 2024</span></div>
+          <div class="cert-row"><div><div class="cert-name">MSc in Cybersecurity</div><div class="cert-issuer">Hood College · Frederick, MD · GPA 3.77</div></div><span class="badge b-pending">May 2026</span></div>
+          <div class="cert-row"><div><div class="cert-name">BSc in Office and Information Management</div><div class="cert-issuer">Makerere University · GPA 3.63</div></div><span class="badge b-active">2019</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="wrap reveal">
+        <span class="section-label">Contact</span>
+        <h2>Get in touch</h2>
+        <div class="contact-cols">
+          <div>
+            <p class="contact-desc">I'm actively looking for SOC Analyst and Cybersecurity Analyst roles in the United States. Open to hybrid and remote positions.</p>
+            <p class="contact-note" style="margin-top: 0.5rem;">Frederick, Maryland · Open to relocation</p>
+          </div>
+          <div class="contact-links">
+            <a href="mailto:rnkunda3@gmail.com" class="clink"><span class="clink-label">Email</span><span class="clink-value">rnkunda3@gmail.com</span></a>
+            <a href="https://www.linkedin.com/in/ronah-ankunda" target="_blank" rel="noreferrer" class="clink"><span class="clink-label">LinkedIn</span><span class="clink-value">linkedin.com/in/ronah-ankunda</span></a>
+            <a href="https://github.com/ronah-ankunda" target="_blank" rel="noreferrer" class="clink"><span class="clink-label">GitHub</span><span class="clink-value">github.com/ronah-ankunda</span></a>
+            <a href="Ronah_Ankunda_CV.pdf" download class="clink"><span class="clink-label">Resume</span><span class="clink-value">Download PDF</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>Ronah Ankunda · Cybersecurity Analyst</span>
+      <span>© 2026</span>
     </div>
-  </div>
-</section>
+  </footer>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-left">
-    <span>RA</span> / Ronah Ankunda · Cybersecurity Analyst · Frederick, MD
-  </div>
-  <div class="footer-right">Built for the 2026 job market · © 2026</div>
-</footer>
-
-<script>
-  // SCROLL REVEAL
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-      }
-    });
-  }, { threshold: 0.08 });
-  reveals.forEach(el => observer.observe(el));
-
-  // BAR CHART ANIMATION
-  const barObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.bar-fill').forEach(bar => {
-          const w = bar.dataset.width;
-          setTimeout(() => { bar.style.width = w + '%'; }, 200);
-        });
-      }
-    });
-  }, { threshold: 0.2 });
-
-  document.querySelectorAll('.bar-chart').forEach(chart => barObserver.observe(chart));
-
-  // SMOOTH ACTIVE NAV
-  const sections = document.querySelectorAll('section[id], div[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
-    });
-  });
-</script>
-
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('show'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  </script>
 </body>
 </html>
